@@ -1,0 +1,482 @@
+/*
+================================
+CALM YOUTUBE HOME
+A text-first, motion-quiet homepage.
+===============================
+*/
+
+html.calm-youtube {
+  --calm-bg: #fcfcfb;
+  --calm-fg: #16181b;
+  --calm-fg-soft: #41464d;
+  --calm-muted: #8b9199;
+  --calm-line: rgba(0, 0, 0, 0.075);
+  --calm-hover: rgba(0, 0, 0, 0.026);
+  --calm-accent: #a9781f;
+
+  --calm-measure: 840px;
+
+  /* YouTube forces html{font-size:10px},
+     so spacing is expressed in px */
+  --calm-gutter: 40px;
+
+  --calm-font:
+    ui-sans-serif, -apple-system,
+    BlinkMacSystemFont, "Segoe UI",
+    Inter, Roboto, Helvetica, Arial,
+    sans-serif;
+
+  --calm-ease: cubic-bezier(.22, .61, .36, 1);
+  --calm-ease-out: cubic-bezier(.16, 1, .3, 1);
+  --calm-fast: 130ms;
+  --calm-slow: 240ms;
+
+  background: var(--calm-bg);
+  scrollbar-color:
+    rgba(0, 0, 0, .2) transparent;
+  -webkit-font-smoothing: antialiased;
+}
+
+html.calm-youtube[dark] {
+  --calm-bg: #0c0d0f;
+  --calm-fg: #f1f2f4;
+  --calm-fg-soft: #c3c7cd;
+  --calm-muted: #737a83;
+  --calm-line: rgba(255, 255, 255, .085);
+  --calm-hover: rgba(255, 255, 255, .034);
+  --calm-accent: #d8a44a;
+
+  scrollbar-color:
+    rgba(255, 255, 255, .22) transparent;
+}
+
+html.calm-youtube ::selection {
+  background: rgba(169, 120, 31, .22);
+}
+
+/* ============================
+   NOISE
+============================ */
+
+html.calm-youtube ytd-app,
+html.calm-youtube ytd-browse,
+html.calm-youtube #primary,
+html.calm-youtube ytd-rich-grid-renderer {
+
+  background: var(--calm-bg) !important;
+}
+
+html.calm-youtube ytd-moving-thumbnail-renderer,
+html.calm-youtube ytd-video-preview,
+html.calm-youtube video,
+html.calm-youtube ytd-rich-shelf-renderer,
+html.calm-youtube ytd-reel-shelf-renderer,
+html.calm-youtube #secondary,
+html.calm-youtube a.ytLockupViewModelContentImage,
+html.calm-youtube yt-thumbnail-view-model,
+html.calm-youtube .ytThumbnailViewModelImage,
+html.calm-youtube yt-thumbnail-bottom-overlay-view-model {
+
+  display: none !important;
+}
+
+html.calm-youtube ytd-thumbnail,
+html.calm-youtube yt-image,
+html.calm-youtube yt-img-shadow,
+html.calm-youtube #thumbnail,
+html.calm-youtube img,
+html.calm-youtube a.ytLockupViewModelContentImage,
+html.calm-youtube yt-thumbnail-view-model,
+html.calm-youtube .ytThumbnailViewModelImage,
+html.calm-youtube .ytThumbnailOverlayButtonViewModelButtonContainer {
+
+  opacity: 0 !important;
+
+  visibility: hidden !important;
+
+  height: 0 !important;
+
+  min-height: 0 !important;
+
+  overflow: hidden !important;
+}
+
+html.calm-youtube * {
+  box-shadow: none !important;
+}
+
+/* ============================
+   FEED
+============================ */
+
+html.calm-youtube ytd-rich-grid-renderer #contents {
+
+  max-width: var(--calm-measure);
+
+  margin: 0 auto !important;
+
+  padding:
+    44px 20px 96px !important;
+
+  counter-reset: calm-row;
+}
+
+html.calm-youtube ytd-rich-item-renderer {
+
+  display: grid !important;
+
+  grid-template-columns:
+    var(--calm-gutter) minmax(0, 1fr);
+
+  column-gap: .75rem;
+
+  align-items: start;
+
+  position: relative;
+
+  width: 100% !important;
+
+  max-width: none !important;
+
+  margin: 0 !important;
+
+  padding: 0 !important;
+
+  border-bottom:
+    1px solid var(--calm-line);
+
+  counter-increment: calm-row;
+}
+
+html.calm-youtube ytd-rich-item-renderer:first-of-type {
+
+  border-top:
+    1px solid var(--calm-line);
+}
+
+/* row numbering */
+
+html.calm-youtube ytd-rich-item-renderer::before {
+
+  content: counter(calm-row, decimal-leading-zero);
+
+  padding-top: 17px;
+
+  text-align: right;
+
+  font-family: var(--calm-font);
+
+  font-size: 11px;
+
+  line-height: 1;
+
+  letter-spacing: .06em;
+
+  font-variant-numeric: tabular-nums;
+
+  color: var(--calm-muted);
+}
+
+/* accent rail */
+
+html.calm-youtube ytd-rich-item-renderer::after {
+
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  top: 50%;
+
+  width: 2px;
+
+  height: 32px;
+
+  margin-top: -16px;
+
+  border-radius: 2px;
+
+  background: var(--calm-accent);
+
+  opacity: 0;
+
+  transform: scaleY(.3);
+
+  transform-origin: center;
+
+  pointer-events: none;
+}
+
+/* flatten lockups into rows */
+
+html.calm-youtube yt-lockup-view-model,
+html.calm-youtube .ytLockupViewModelHost {
+
+  display: block !important;
+
+  min-height: 0 !important;
+
+  margin: 0 !important;
+
+  padding: 13px 4px 13px 0 !important;
+
+  background: transparent !important;
+
+  border-radius: 0 !important;
+}
+
+html.calm-youtube .ytLockupViewModelMetadata {
+
+  margin: 0 !important;
+
+  padding: 0 !important;
+}
+
+/* let the title use the full row width */
+
+html.calm-youtube .ytLockupMetadataViewModelTextContainer {
+
+  flex: 1 1 auto !important;
+
+  width: auto !important;
+
+  max-width: none !important;
+
+  min-width: 0 !important;
+}
+
+html.calm-youtube .ytLockupMetadataViewModelAvatar,
+html.calm-youtube .ytThumbnailBottomOverlayViewModelHost {
+
+  display: none !important;
+}
+
+/* ============================
+   TYPE
+============================ */
+
+html.calm-youtube #video-title,
+html.calm-youtube a.ytLockupMetadataViewModelTitle {
+
+  display: block !important;
+
+  font-family: var(--calm-font) !important;
+
+  font-size: 15.5px !important;
+
+  font-weight: 500 !important;
+
+  line-height: 1.45 !important;
+
+  letter-spacing: -.01em;
+
+  color: var(--calm-fg) !important;
+
+  max-height: none !important;
+
+  text-wrap: pretty;
+
+  transform: translateX(0);
+}
+
+html.calm-youtube .ytLockupMetadataViewModelHeadingReset {
+
+  margin: 0 !important;
+
+  padding: 0 !important;
+
+  font: inherit !important;
+}
+
+html.calm-youtube a.ytLockupMetadataViewModelTitle span {
+
+  font: inherit !important;
+
+  color: inherit !important;
+}
+
+html.calm-youtube #avatar-link,
+html.calm-youtube #avatar {
+  display: none !important;
+}
+
+html.calm-youtube #metadata-line,
+html.calm-youtube yt-content-metadata-view-model {
+
+  font-family: var(--calm-font) !important;
+
+  font-size: 12.5px !important;
+
+  letter-spacing: .01em;
+
+  font-variant-numeric: tabular-nums;
+
+  color: var(--calm-muted) !important;
+
+  opacity: 1 !important;
+}
+
+html.calm-youtube #metadata-line,
+html.calm-youtube .ytLockupMetadataViewModelMetadata {
+
+  margin-top: 5px !important;
+}
+
+html.calm-youtube .ytContentMetadataViewModelMetadataText,
+html.calm-youtube .ytContentMetadataViewModelDelimiter {
+
+  font-size: 12.5px !important;
+
+  color: var(--calm-muted) !important;
+}
+
+html.calm-youtube .ytContentMetadataViewModelMetadataRow .ytAttributedStringLink {
+
+  color: var(--calm-fg-soft) !important;
+
+  font-weight: 500 !important;
+}
+
+html.calm-youtube #channel-name a,
+html.calm-youtube #channel-name yt-formatted-string {
+
+  font-family: var(--calm-font) !important;
+
+  font-size: 12.5px !important;
+
+  font-weight: 500 !important;
+
+  color: var(--calm-fg-soft) !important;
+}
+
+html.calm-youtube #video-title:focus-visible {
+
+  outline:
+    2px solid var(--calm-accent);
+
+  outline-offset: 3px;
+
+  border-radius: 2px;
+}
+
+/* ============================
+   MOTION
+   Only rows marked .calm-row are
+   exempt from the runtime freeze.
+============================ */
+
+html.calm-youtube .calm-row {
+
+  animation:
+    calm-row-in 380ms var(--calm-ease-out)
+    backwards;
+
+  animation-delay:
+    calc(var(--calm-i, 0) * 22ms);
+}
+
+html.calm-youtube ytd-rich-item-renderer {
+  transition:
+    background-color var(--calm-fast)
+    var(--calm-ease);
+}
+
+html.calm-youtube ytd-rich-item-renderer::before {
+  transition:
+    color var(--calm-fast) var(--calm-ease),
+    transform var(--calm-slow) var(--calm-ease-out);
+}
+
+html.calm-youtube ytd-rich-item-renderer::after {
+  transition:
+    opacity var(--calm-fast) var(--calm-ease),
+    transform var(--calm-slow) var(--calm-ease-out);
+}
+
+html.calm-youtube #video-title,
+html.calm-youtube a.ytLockupMetadataViewModelTitle {
+  transition:
+    transform var(--calm-slow) var(--calm-ease-out),
+    color var(--calm-fast) var(--calm-ease);
+}
+
+html.calm-youtube #metadata-line,
+html.calm-youtube yt-content-metadata-view-model {
+  transition:
+    color var(--calm-fast) var(--calm-ease);
+}
+
+/* hover / keyboard focus */
+
+html.calm-youtube ytd-rich-item-renderer:hover,
+html.calm-youtube ytd-rich-item-renderer:focus-within {
+  background: var(--calm-hover);
+}
+
+html.calm-youtube ytd-rich-item-renderer:hover::before,
+html.calm-youtube ytd-rich-item-renderer:focus-within::before {
+  color: var(--calm-accent);
+
+  transform: translateX(2px);
+}
+
+html.calm-youtube ytd-rich-item-renderer:hover::after,
+html.calm-youtube ytd-rich-item-renderer:focus-within::after {
+  opacity: 1;
+
+  transform: scaleY(1);
+}
+
+html.calm-youtube ytd-rich-item-renderer:hover #video-title,
+html.calm-youtube ytd-rich-item-renderer:focus-within #video-title,
+html.calm-youtube ytd-rich-item-renderer:hover a.ytLockupMetadataViewModelTitle,
+html.calm-youtube ytd-rich-item-renderer:focus-within a.ytLockupMetadataViewModelTitle {
+  transform: translateX(2px);
+}
+
+html.calm-youtube ytd-rich-item-renderer:hover #metadata-line,
+html.calm-youtube ytd-rich-item-renderer:focus-within #metadata-line,
+html.calm-youtube ytd-rich-item-renderer:hover yt-content-metadata-view-model,
+html.calm-youtube ytd-rich-item-renderer:focus-within yt-content-metadata-view-model {
+  color: var(--calm-fg-soft) !important;
+}
+
+@keyframes calm-row-in {
+
+  from {
+    opacity: 0;
+    transform: translateY(7px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================
+   REDUCED MOTION
+============================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html.calm-youtube .calm-row {
+    animation: none !important;
+  }
+
+  html.calm-youtube *,
+  html.calm-youtube *::before,
+  html.calm-youtube *::after {
+    transition-duration: 1ms !important;
+  }
+
+  html.calm-youtube ytd-rich-item-renderer:hover #video-title,
+  html.calm-youtube ytd-rich-item-renderer:focus-within #video-title,
+  html.calm-youtube ytd-rich-item-renderer:hover a.ytLockupMetadataViewModelTitle,
+  html.calm-youtube ytd-rich-item-renderer:focus-within a.ytLockupMetadataViewModelTitle,
+  html.calm-youtube ytd-rich-item-renderer:hover::before,
+  html.calm-youtube ytd-rich-item-renderer:focus-within::before {
+    transform: none !important;
+  }
+}
